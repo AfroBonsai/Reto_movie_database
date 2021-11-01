@@ -1,17 +1,32 @@
 module.exports = mongoose => {
-    const Movie = mongoose.model(
-      "movies",
-      mongoose.Schema(
-        {
-          title: String,
-          genre: Number,
-          cast: String,
-          location: String,
-          available: Boolean
+  const Movie = mongoose.model(
+    "movies",
+    mongoose.Schema(
+      {
+        title: {
+          type: String,
+          required: true
         },
-        { timestamps: true }
-      )
-    );
-  
-    return Movie;
-  };
+        genre: {
+          type: String,
+          required: true
+        },
+        cast: {
+          type: String,
+          required: true
+        },
+        location: {
+          type: String,
+          required: true
+        },
+        available: {
+          type: Boolean,
+          required: true
+        },
+      },
+      { timestamps: true }
+    )
+  );
+
+  return Movie;
+};

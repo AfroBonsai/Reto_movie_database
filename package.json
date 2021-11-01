@@ -1,7 +1,7 @@
 {
-  "name": "prc24",
-  "version": "0.0.1",
-  "description": "Proyecto inicial API REST",
+  "name": "retomoviedatabase",
+  "version": "0.1",
+  "description": "Movie database",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,9 +11,12 @@
   "keywords": [
     "node",
     "API",
-    "GeeksHubs"
+    "GeeksHubs",
+    "database",
+    "jwt",
+    "movies"
   ],
-  "author": "Jose Marin",
+  "author": "George Zamfir",
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",

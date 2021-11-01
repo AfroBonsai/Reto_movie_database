@@ -1,15 +1,17 @@
 module.exports = mongoose => {
-    const Movie = mongoose.model(
-      "movies",
-      mongoose.Schema(
-        {
-          title: String,
-          categoryId: Number,
-          available: Boolean
-        },
-        { timestamps: true }
-      )
-    );
-  
-    return Movie;
-  };
+  const Order = mongoose.model(
+    "orders",
+    mongoose.Schema(
+      {
+        movieID: String,
+        clientId: String,
+        orderDate: Date,
+        returnDate: Date,
+        price: Number,
+      },
+      { timestamps: true }
+    )
+  );
+
+  return Order;
+};

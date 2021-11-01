@@ -1,15 +1,25 @@
 module.exports = mongoose => {
-    const Movie = mongoose.model(
-      "movies",
-      mongoose.Schema(
-        {
-          title: String,
-          categoryId: Number,
-          available: Boolean
-        },
-        { timestamps: true }
-      )
-    );
-  
-    return Movie;
-  };
+  const User = mongoose.model(
+    "users",
+    mongoose.Schema({
+      name: {
+        type: String,
+        required: true
+      },
+      password: {
+        type: String,
+        required: true
+      },
+      email: {
+        type: String,
+        required: true
+      },
+      superUser: Boolean
+    },
+
+      { timestamps: true }
+    )
+  );
+
+  return User;
+};

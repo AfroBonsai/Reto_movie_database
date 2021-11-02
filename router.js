@@ -1,11 +1,14 @@
 const router = require('express').Router();
 
-//Importamos Routes definidas en views
-const MovieRouter = require('./routes/movie.routes');
-const CategoryRouter = require('./routes/category.routes');
+//Importamos Routes definidas en routes
+
+const UserRouter = require('./routes/user.routes');
+// const MovieRouter = require('./routes/movie.routes');
+// const OrderRouter = require('./routes/order.routes');
 
 //Rutas
-router.use('/movie', MovieRouter);
-router.use('/category', CategoryRouter);
+router.use('/user', UserRouter);
+// router.use('/movie', MovieRouter);
+// router.use('/order', orderRouter);
 
 module.exports = router;

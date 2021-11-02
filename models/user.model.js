@@ -14,7 +14,7 @@ module.exports = mongoose => {
         type: String,
         required: true
       },
-      superUser: Boolean
+      // superUser: Boolean
     },
 
       { timestamps: true }

@@ -1,80 +1,84 @@
 const db = require("../models");
-const Category = db.categories;
+const User = db.users;
 
-const CategoryController = {}; //Create the object controller
+const UserController = {}; //Create the object "user"
 
 //CRUD end-points Functions
+
+// REGISTER
 //-------------------------------------------------------------------------------------
-// Create and Save a new Category
-CategoryController.create = (req, res) => {
+// Create and Save a new User
+UserController.register = (req, res) => {
   // Validate request
-  if (!req.body.type) {
-    res.status(400).send({ message: "Content can not be empty!" });
+  if (!req.body.name) {
+    res.status(400).send({ message: "Content can't be empty!" });
     return;
   }
 
-  // Create a Category
-  const category = new Category({
-    type: req.body.type,
-    age: req.body.age
+  // Create an User
+  const user = new User({
+    name: req.body.name,
+    password: req.body.password,
+    email: req.body.email
+    // superUser: req.body.superUser
   });
 
-  // Save category in the database
-  category
-    .save(category)
+  // Save user in the database
+  user
+    .save(user)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the category."
+          err.message || "An error occurred while creating new user."
       });
     });
 };
 
-
+// FIND
 //-------------------------------------------------------------------------------------
-// Retrieve all categories from the database.
-CategoryController.findAll = (req, res) => {
-  const type = req.query.type;
-  var condition = type ? { type: { $regex: new RegExp(type), $options: "i" } } : {};
-
-  Category.find(condition)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving categories."
-      });
-    });
-};
-
-
-//-------------------------------------------------------------------------------------
-// Find a single category with an id
-CategoryController.findOne = (req, res) => {
+// Find a single user with an id
+UserController.findOne = (req, res) => {
   const id = req.params.id;
 
-  Category.findById(id)
+  User.findById(id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found category with id " + id });
+        res.status(404).send({ message: "Could not find user with id " + id });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving category with id=" + id });
+        .send({ message: "Error retrieving user with id=" + id });
+    });
+};
+
+//-------------------------------------------------------------------------------------
+// Retrieve all users from the database.
+UserController.findAll = (req, res) => {
+  const name = req.query.name;
+  var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
+
+  User.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving users."
+      });
     });
 };
 
 
+// UPDATE
 //-------------------------------------------------------------------------------------
-// Update a Category by the id in the request
-CategoryController.update = (req, res) => {
+// Update an user by id
+UserController.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
@@ -87,60 +91,61 @@ CategoryController.update = (req, res) => {
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update Category with id=${id}. Maybe Category was not found!`
+          message: `Cannot update user with id=${id}. Maybe user was not found!`
         });
-      } else res.send({ message: "Category was updated successfully." });
+      } else res.send({ message: "User was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Category with id=" + id
+        message: "Error updating User with id=" + id
       });
     });
 };
 
 
+// DELETE
 //-------------------------------------------------------------------------------------
-// Delete a Category with the specified id in the request
-CategoryController.delete = (req, res) => {
+// Delete an user with the specified id in the request
+UserController.delete = (req, res) => {
   const id = req.params.id;
 
-  Category.findByIdAndRemove(id, { useFindAndModify: false })
+  User.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete Category with id=${id}. Maybe Category was not found!`
+          message: `Cannot delete user with id=${id}. Maybe user was not found!`
         });
       } else {
         res.send({
-          message: "Category was deleted successfully!"
+          message: "user was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Category with id=" + id
+        message: "Could not delete user with id=" + id
       });
     });
 };
 
 
 //-------------------------------------------------------------------------------------
-// Delete all Categories from the database.
-CategoryController.deleteAll = (req, res) => {
-    Category.deleteMany({})
+// Delete all users from the database.
+UserController.deleteAll = (req, res) => {
+  User.deleteMany({})
     .then(data => {
       res.send({
-        message: `${data.deletedCount} Category were deleted successfully!`
+        message: `${data.deletedCount} ALL users were deleted successfully!`
       });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all Category."
+          err.message || "Some error occurred while removing ALL users."
       });
     });
 };
 
 
 
-module.exports = CategoryController;
+module.exports = UserController;

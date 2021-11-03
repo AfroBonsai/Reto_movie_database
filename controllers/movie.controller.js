@@ -34,7 +34,7 @@ MovieController.findById = (req, res) => {
   Movie.findById(_id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found Movie with id " + id });
+        res.status(404).send({ message: "Could not find a movie with id: " + id });
       else res.send(data);
     })
     .catch(err => {
@@ -182,19 +182,19 @@ MovieController.update = (req, res) => {
       message: "Data to update can not be empty!"
     });
   }
-  const id = req.params.id;
+  const _id = req.params._id;
 
-  Movie.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Movie.findByIdAndUpdate(_id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update Movie with id=${id}. Maybe Movie was not found!`
+          message: `Cannot update Movie with id=${_id}. Maybe Movie was not found!`
         });
       } else res.send({ message: "Movie was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Movie with id=" + id
+        message: "Error updating Movie with id=" + _id
       });
     });
 };

@@ -3,9 +3,12 @@ const Order = db.categories;
 
 const OrderController = {}; //Create the object controller
 
+
 //CRUD end-points Functions
-//-------------------------------------------------------------------------------------
-// Create and Save a new Order
+
+//---- POST ---------------------------------------------------------------------------
+// Create and Save a new order.
+
 OrderController.create = (req, res) => {
   // Validate request
   if (!req.body.movieID) {
@@ -36,9 +39,9 @@ OrderController.create = (req, res) => {
     });
 };
 
-
-//-------------------------------------------------------------------------------------
+//--- GET -----------------------------------------------------------------------------
 // Retrieve all orders from the database.
+
 OrderController.findAll = (req, res) => {
   const movieID = req.query.movieID;
   var condition = movieID ? { movieID: { $regex: new RegExp(movieID), $options: "i" } } : {};
@@ -55,36 +58,9 @@ OrderController.findAll = (req, res) => {
     });
 };
 
-
-// //-------------------------------------------------------------------------------------
-// // Update an order by the id in the request
-// OrderController.update = (req, res) => {
-//   if (!req.body) {
-//     return res.status(400).send({
-//       message: "Data to update can not be empty!"
-//     });
-//   }
-
-//   const id = req.params.id;
-
-//   Order.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-//     .then(data => {
-//       if (!data) {
-//         res.status(404).send({
-//           message: `Cannot update order with id=${id}. Maybe the order was not found!`
-//         });
-//       } else res.send({ message: "Order was updated successfully." });
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message: "Error updating order with id=" + id
-//       });
-//     });
-// };
-
-
 //-------------------------------------------------------------------------------------
 // Delete a Category with the specified id in the request
+
 OrderController.delete = (req, res) => {
   const movieID = req.params.movieID;
 
@@ -125,6 +101,30 @@ OrderController.deleteAll = (req, res) => {
     });
 };
 
+// //-------------------------------------------------------------------------------------
+// // Update an order by the id in the request
+// OrderController.update = (req, res) => {
+//   if (!req.body) {
+//     return res.status(400).send({
+//       message: "Data to update can not be empty!"
+//     });
+//   }
 
+//   const id = req.params.id;
+
+//   Order.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+//     .then(data => {
+//       if (!data) {
+//         res.status(404).send({
+//           message: `Cannot update order with id=${id}. Maybe the order was not found!`
+//         });
+//       } else res.send({ message: "Order was updated successfully." });
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message: "Error updating order with id=" + id
+//       });
+//     });
+// };
 
 module.exports = OrderController;

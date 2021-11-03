@@ -7,30 +7,33 @@ Notflix, the movie database. Search and lease.
 Users managing routes:
 
 POST commands:
-Login as an existing user:  http://localhost:3000/login
-Create a new user:  http://localhost:3000/register
+Login as an existing user:  http://localhost:3000/user/login
+Create a new user:  http://localhost:3000/user/register
 
 GET commands:
-Show user information:  http://localhost:3000/:id
-Show all users: http://localhost:3000/
+Show user information:  http://localhost:3000/user/:id
+Show all users: http://localhost:3000/user/
 
 PUT commands:
-Update user information http://localhost:3000/:id
+Update user information: http://localhost:3000/user/:id
 
-router.delete("/:id", auth, users.delete); // Delete an user - *Requires Admin privileges*
-router.delete("/", auth, users.deleteAll);
+DELETE commands:
+Delete an user: http://localhost:3000/user/:id *Requires Admin privileges*
+WARNING! Delete all users: http://localhost:3000/user/ *Requires Admin privileges*
 
 
 ///////////////////////////////////////////////////////////////////////////
 
 Order managing routes:
 
+POST commands:
+Create a new order: http://localhost:3000/order/
 
-router.post("/", orders.create);
+GET commands:
+Show all orders: http://localhost:3000/order/
 
-router.get("/", orders.findAll);
-
-router.delete("/:id", orders.delete);
+DELETE commands:
+Delete all orders: http://localhost:3000/order/:id/
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -39,33 +42,22 @@ Movie managing routes:
 
 
 GET commands:
-
-http://localhost:3000/movie/
-
-http://localhost:3000/movie/:id
-
-http://localhost:3000/movie/title/:title
-
-http://localhost:3000/movie/genre/:genre
-
-http://localhost:3000/movie/cast/:cast
-
-http://localhost:3000/movie/location/:location
-
-http://localhost:3000/movie/available/:available
-
+Show all movies: http://localhost:3000/movie/
+Find movie by ID: http://localhost:3000/movie/:id
+Find movie by title: http://localhost:3000/movie/title/:title
+Find movie by genre: http://localhost:3000/movie/genre/:genre
+Find movie by cast: http://localhost:3000/movie/cast/:cast
+Find movie by location: http://localhost:3000/movie/location/:location
+Find movie by availability: http://localhost:3000/movie/available/:available
 
 POST commands:
+Create a new movie: http://localhost:3000/movie/
 
-http://localhost:3000/movie/
-
-http://localhost:3000/movie/:id
-
+UPDATE commands:
+Update an existing movie: http://localhost:3000/movie/:id
 
 DELETE commands:
-
-http://localhost:3000/movie/:id
-
+Delete a specific movie: http://localhost:3000/movie/:id
 
 ///////////////////////////////////////////////////////////////////////////
 

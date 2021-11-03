@@ -13,65 +13,63 @@ const UserController = {}; //Create the object "user"
 //REGISTER new user in database
 //Log in as existing user
 
-UserController.logIn = (req, res) =>{
+UserController.logIn = (req, res) => {
   let { email, password } = req.body;
-  // Search for an existing user
-  User.findOne({ where: { email: email }
-  }).then(user => {
-      if (!user) {
-          res.status(404).json({ msg: "User with this email was not found" });
-      } else {
-          if (bcrypt.compareSync(password, user.password)) {
-              // Creamos el token
-              let token = jwt.sign({ user: user }, authConfig.secret, {
-                  expiresIn: authConfig.expires
-              });
 
-              res.json({
-                  user: user,
-                  token: token
-              })
-          } else {
-              // Unauthorized Access
-              res.status(401).json({ msg: "Incorrect password" })
-          }
+  // Search for an existing user
+  User.findOne({ email: email }).then(user => {
+    if (!user) {
+      res.status(404).json({ msg: "User with this email was not found" });
+    } else {
+      if (bcrypt.compareSync(password, user.password)) {
+        // Creamos el token
+        let token = jwt.sign({ user: user }, authConfig.secret, {
+          expiresIn: authConfig.expires
+        });
+
+        res.json({
+          user: user,
+          token: token
+        })
+      } else {
+        // Unauthorized Access
+        res.status(401).json({ msg: "Wrong password" })
       }
+    }
   }).catch(err => {
-      res.status(500).json(err);
+    res.status(500).json(err);
   })
 };
-
-
 
 
 //-------------------------------------------------------------------------------------
 //REGISTER new user in database
 //create user
-UserController.register = (req, res)=> {
+UserController.register = (req, res) => {
 
   // Encriptamos la contraseña
   let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
 
   // Crear un usuario
   User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: password,
-      superUser: req.body.superUser,
+    name: req.body.name,
+    email: req.body.email,
+    password: password,
+    superUser: req.body.superUser,
   }).then(user => {
 
-      // Creamos el token
-      let token = jwt.sign({ user: user }, authConfig.secret, {
-          expiresIn: authConfig.expires
-      });
+    // Creamos el token
+    let token = jwt.sign({ user: user }, authConfig.secret, {
+      expiresIn: authConfig.expires
+    });
 
-      res.json({
-          user: user,
-          token: token
-      });
+    res.json({
+      user: user,
+      token: token
+    });
 
   }).catch(err => {
-      res.status(500).json(err);
+    res.status(500).json(err);
   });
 
 };

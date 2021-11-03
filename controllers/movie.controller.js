@@ -146,7 +146,7 @@ MovieController.findByAvailability = (req, res) => {
 MovieController.create = (req, res) => {
   // Validate request
 
-  if (req.user.superUser == "true") {
+  // if (req.user.superUser == "true") {
 
     if (!req.body.title) {
       res.status(400).send({ message: "Content can not be empty!" });
@@ -174,11 +174,12 @@ MovieController.create = (req, res) => {
             err.message || "Some error occurred while creating the Tutorial."
         });
       });
-  } else {
-    res.send({
-      message: "You don't have permissions to create a new movie entry."
-    });
-  }
+  // } 
+  // else {
+  //   res.send({
+  //     message: "You don't have permissions to create a new movie entry."
+  //   });
+  // }
 };
 
 //-------------------------------------------------------------------------------------

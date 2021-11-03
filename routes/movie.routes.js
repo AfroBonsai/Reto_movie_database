@@ -18,7 +18,8 @@ router.post("/", auth, movies.create);
 
 router.put("/:_id", auth, movies.update);
 
-router.delete("/:_id,", auth, movies.delete);
+router.delete("/:_id", auth, movies.delete);
+router.delete("/all", auth, movies.deleteAll);
 
 
 module.exports = router;

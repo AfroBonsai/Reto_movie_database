@@ -85,13 +85,13 @@ UserController.findOne = (req, res) => {
   User.findById(_id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Could not find user with id " + id });
+        res.status(404).send({ message: "Could not find user with id " + _id });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving user with id=" + id });
+        .send({ message: "Error retrieving user with id=" + _id });
     });
 };
 

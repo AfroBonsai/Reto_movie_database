@@ -189,34 +189,34 @@ MovieController.create = (req, res) => {
 
 MovieController.update = (req, res) => {
 
-  // if (req.user.user.superUser == true) {
+  if (req.user.user.superUser == true) {
 
     if (!req.body) {
       return res.status(400).send({
         message: "Data to update can not be empty!"
       });
     }
-    const id = req.params.id;
+    const _id = req.params._id;
 
-    Movie.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    Movie.findByIdAndUpdate(_id, req.body, { useFindAndModify: false })
       .then(data => {
         if (!data) {
           res.status(404).send({
-            message: `Cannot update Movie with id=${id}. Maybe Movie was not found!`
+            message: `Cannot update Movie with id=${_id}. Maybe Movie was not found!`
           });
         } else res.send({ message: "Movie was updated successfully." });
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Movie with id=" + id
+          message: "Error updating Movie with id=" + _id
         });
       });
-  // }
-  // else {
-  //   res.send({
-  //     message: "You don't have permissions to create a new movie entry."
-  //   });
-  // }
+  }
+  else {
+    res.send({
+      message: "You don't have permissions to modify any movie entry."
+    });
+  }
 };
 
 
@@ -224,64 +224,64 @@ MovieController.update = (req, res) => {
 // Delete a Movie with the specified id in the request
 
 MovieController.delete = (req, res) => {
-  
-  // if (req.user.user.superUser == true) {
 
-  const id = req.params.id;
+  if (req.user.user.superUser == true) {
 
-  Movie.findByIdAndRemove(id, { useFindAndModify: false })
-    .then(data => {
+    const _id = req.params._id;
 
-      
+    console.log(_id);
 
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot delete Movie with id=${id}. Maybe Movie was not found!`
+    Movie.findByIdAndRemove(_id, { useFindAndModify: false })
+      .then(data => {
+
+        if (!data) {
+          res.status(404).send({
+            message: `Cannot delete Movie with id=${_id}. Maybe Movie was not found!`
+          });
+        } else {
+          res.send({
+            message: "Movie was deleted successfully!"
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete Movie with id=" + _id
         });
-      } else {
-        res.send({
-          message: "Movie was deleted successfully!"
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete Movie with id=" + id
       });
+  }
+  else {
+    res.send({
+      message: "You don't have delete a movie entry."
     });
-  // }
-  // else {
-  //   res.send({
-  //     message: "You don't have permissions to create a new movie entry."
-  //   });
-  // }
+  }
 };
 
 
 //-------------------------------------------------------------------------------------
 // Delete all Movies from the database.
 MovieController.deleteAll = (req, res) => {
-  
+
   if (req.user.user.superUser == true) {
 
-  Movie.deleteMany({})
-    .then(data => {
-      res.send({
-        message: `${data.deletedCount} Movies were deleted successfully!`
+    Movie.deleteMany({})
+      .then(data => {
+        res.send({
+          message: `${data.deletedCount} Movies were deleted successfully!`
+        });
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while removing all Movies."
+        });
       });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all Movies."
-      });
-    });
   }
   else {
     res.send({
-      message: "You don't have permissions to create a new movie entry."
+      message: "You don't have permissions to delete all entries."
     });
-  } 
+  }
 };
 
 

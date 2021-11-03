@@ -80,9 +80,9 @@ UserController.register = (req, res) => {
 //-------------------------------------------------------------------------------------
 // Find a single user with an id
 UserController.findOne = (req, res) => {
-  const id = req.params.id;
+  const _id = req.params._id;
 
-  User.findById(id)
+  User.findById(_id)
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Could not find user with id " + id });

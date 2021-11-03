@@ -146,7 +146,7 @@ MovieController.findByAvailability = (req, res) => {
 MovieController.create = (req, res) => {
   // Validate request
 
-  // if (req.user.superUser == "true") {
+  if (req.user.user.superUser == true) {
 
     if (!req.body.title) {
       res.status(400).send({ message: "Content can not be empty!" });
@@ -174,7 +174,44 @@ MovieController.create = (req, res) => {
             err.message || "Some error occurred while creating the Tutorial."
         });
       });
-  // } 
+  }
+  else {
+    res.send({
+      message: "You don't have permissions to create a new movie entry."
+    });
+  }
+};
+
+//-------------------------------------------------------------------------------------
+// Update a Movie by the id in the request
+
+
+
+MovieController.update = (req, res) => {
+
+  // if (req.user.user.superUser == true) {
+
+    if (!req.body) {
+      return res.status(400).send({
+        message: "Data to update can not be empty!"
+      });
+    }
+    const id = req.params.id;
+
+    Movie.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+      .then(data => {
+        if (!data) {
+          res.status(404).send({
+            message: `Cannot update Movie with id=${id}. Maybe Movie was not found!`
+          });
+        } else res.send({ message: "Movie was updated successfully." });
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error updating Movie with id=" + id
+        });
+      });
+  // }
   // else {
   //   res.send({
   //     message: "You don't have permissions to create a new movie entry."
@@ -182,41 +219,21 @@ MovieController.create = (req, res) => {
   // }
 };
 
-//-------------------------------------------------------------------------------------
-// Update a Movie by the id in the request
-
-MovieController.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: "Data to update can not be empty!"
-    });
-  }
-  const _id = req.params._id;
-
-  Movie.findByIdAndUpdate(_id, req.body, { useFindAndModify: false })
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update Movie with id=${_id}. Maybe Movie was not found!`
-        });
-      } else res.send({ message: "Movie was updated successfully." });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating Movie with id=" + _id
-      });
-    });
-};
-
 
 //--- DELETE --------------------------------------------------------------------------
 // Delete a Movie with the specified id in the request
 
 MovieController.delete = (req, res) => {
+  
+  // if (req.user.user.superUser == true) {
+
   const id = req.params.id;
 
   Movie.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
+
+      
+
       if (!data) {
         res.status(404).send({
           message: `Cannot delete Movie with id=${id}. Maybe Movie was not found!`
@@ -232,12 +249,21 @@ MovieController.delete = (req, res) => {
         message: "Could not delete Movie with id=" + id
       });
     });
+  // }
+  // else {
+  //   res.send({
+  //     message: "You don't have permissions to create a new movie entry."
+  //   });
+  // }
 };
 
 
 //-------------------------------------------------------------------------------------
 // Delete all Movies from the database.
 MovieController.deleteAll = (req, res) => {
+  
+  if (req.user.user.superUser == true) {
+
   Movie.deleteMany({})
     .then(data => {
       res.send({
@@ -250,6 +276,12 @@ MovieController.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all Movies."
       });
     });
+  }
+  else {
+    res.send({
+      message: "You don't have permissions to create a new movie entry."
+    });
+  } 
 };
 
 

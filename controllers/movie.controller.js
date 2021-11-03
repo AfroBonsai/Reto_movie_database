@@ -50,7 +50,7 @@ MovieController.findById = (req, res) => {
 MovieController.findByTitle = (req, res) => {
   const title = req.params.title;
 
-  Movie.find({title: title})
+  Movie.find({ title: title })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Could not find a movie with the title: " + title });
@@ -69,7 +69,7 @@ MovieController.findByTitle = (req, res) => {
 MovieController.findByGenre = (req, res) => {
   const genre = req.params.genre;
 
-  Movie.find({genre: genre})
+  Movie.find({ genre: genre })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Could not find a movie of the genre " + genre });
@@ -88,7 +88,7 @@ MovieController.findByGenre = (req, res) => {
 MovieController.findByCast = (req, res) => {
   const cast = req.params.cast;
 
-  Movie.find({cast: cast})
+  Movie.find({ cast: cast })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Could not find a movie with cast: " + cast });
@@ -107,7 +107,7 @@ MovieController.findByCast = (req, res) => {
 MovieController.findByLocation = (req, res) => {
   const location = req.params.location;
 
-  Movie.find({location: location})
+  Movie.find({ location: location })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Could not find a movie with location: " + location });
@@ -126,7 +126,7 @@ MovieController.findByLocation = (req, res) => {
 MovieController.findByAvailability = (req, res) => {
   const available = req.params.available;
 
-  Movie.find({available: available})
+  Movie.find({ available: available })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Could not find a movie with available: " + available });
@@ -145,32 +145,40 @@ MovieController.findByAvailability = (req, res) => {
 
 MovieController.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({ message: "Content can not be empty!" });
-    return;
-  }
 
-  // Create a Movie
-  const movie = new Movie({
-    title: req.body.title,
-    genre: req.body.genre,
-    cast: req.body.cast,
-    location: req.body.location,
-    available: req.body.available ? req.body.available : false
-  });
+  if (req.user.superUser == "true") {
 
-  // Save Movie in the database
-  movie
-    .save(movie)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial."
-      });
+    if (!req.body.title) {
+      res.status(400).send({ message: "Content can not be empty!" });
+      return;
+    }
+
+    // Create a Movie
+    const movie = new Movie({
+      title: req.body.title,
+      genre: req.body.genre,
+      cast: req.body.cast,
+      location: req.body.location,
+      available: req.body.available ? req.body.available : false
     });
+
+    // Save Movie in the database
+    movie
+      .save(movie)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the Tutorial."
+        });
+      });
+  } else {
+    res.send({
+      message: "You don't have permissions to create a new movie entry."
+    });
+  }
 };
 
 //-------------------------------------------------------------------------------------
@@ -229,7 +237,7 @@ MovieController.delete = (req, res) => {
 //-------------------------------------------------------------------------------------
 // Delete all Movies from the database.
 MovieController.deleteAll = (req, res) => {
-    Movie.deleteMany({})
+  Movie.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Movies were deleted successfully!`

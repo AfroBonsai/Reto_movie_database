@@ -1,5 +1,5 @@
 module.exports = {
-    secret: process.env.AUTH_SECRET || "wearealljerryes",
+    secret: process.env.AUTH_SECRET || "wubbalubbadubdub",
     expires: process.env.AUTH_EXPIRES || "24h",
     rounds: process.env.AUTH_ROUNDS || 10
 }

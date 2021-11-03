@@ -1,5 +1,4 @@
 const db = require("../models");
-const { user } = require('../models/index');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
@@ -9,10 +8,15 @@ const UserController = {}; //Create the object "user"
 
 //CRUD end-points Functions
 
-UserController.signIn = (req, res) =>{
+
+//-------------------------------------------------------------------------------------
+//REGISTER new user in database
+//Log in as existing user
+
+UserController.logIn = (req, res) =>{
   let { email, password } = req.body;
   // Search for an existing user
-  user.findOne({ where: { email: email }
+  User.findOne({ where: { email: email }
   }).then(user => {
       if (!user) {
           res.status(404).json({ msg: "User with this email was not found" });
@@ -29,7 +33,7 @@ UserController.signIn = (req, res) =>{
               })
           } else {
               // Unauthorized Access
-              res.status(401).json({ msg: "Contraseña incorrecta" })
+              res.status(401).json({ msg: "Incorrect password" })
           }
       }
   }).catch(err => {
@@ -49,11 +53,11 @@ UserController.register = (req, res)=> {
   let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
 
   // Crear un usuario
-  user.create({
+  User.create({
       name: req.body.name,
       email: req.body.email,
       password: password,
-      superUser: superUser,
+      superUser: req.body.superUser,
   }).then(user => {
 
       // Creamos el token
@@ -73,41 +77,6 @@ UserController.register = (req, res)=> {
 };
 
 
-
-
-
-
-// // REGISTER
-// //-------------------------------------------------------------------------------------
-// // Create and Save a new User
-// UserController.register = (req, res) => {
-//   // Validate request
-//   if (!req.body.name) {
-//     res.status(400).send({ message: "Content can't be empty!" });
-//     return;
-//   }
-
-//   // Create an User
-//   const user = new User({
-//     name: req.body.name,
-//     password: req.body.password,
-//     email: req.body.email,
-//     superUser: req.body.superUser
-//   });
-
-//   // Save user in the database
-//   user
-//     .save(user)
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "An error occurred while creating new user."
-//       });
-//     });
-// };
 
 // FIND
 //-------------------------------------------------------------------------------------

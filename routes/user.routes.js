@@ -6,7 +6,7 @@ const auth = require('../middlewares/auth.js');
 const users = require("../controllers/user.controller");
 
 
-router.post("/login", users.signIn); // Login as an existing user
+router.post("/login", users.logIn); // Login as an existing user
 router.post('/register', users.register); // Create a new user
 
 router.get("/:id", users.findOne); // Show user information

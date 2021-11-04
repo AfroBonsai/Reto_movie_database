@@ -14,11 +14,12 @@ router.get("/cast/:cast", movies.findByCast);
 router.get("/location/:location", movies.findByLocation);
 router.get("/available/:available", movies.findByAvailability);
 
-router.post("/", movies.create);
+router.post("/", auth, movies.create);
 
-router.post("/:_id", movies.update);
+router.put("/:_id", auth, movies.update);
 
-router.delete("/:_id,", movies.delete);
+router.delete("/:_id", auth, movies.delete);
+router.delete("/all", auth, movies.deleteAll);
 
 
 module.exports = router;

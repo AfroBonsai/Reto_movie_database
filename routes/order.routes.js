@@ -10,7 +10,7 @@ router.post("/", orders.create);
 
 router.get("/", orders.findAll);
 
-router.delete("/:id", orders.delete);
+router.delete("/:_id", orders.delete);
  
   
 module.exports = router;

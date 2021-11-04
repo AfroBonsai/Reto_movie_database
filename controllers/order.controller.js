@@ -1,5 +1,5 @@
 const db = require("../models");
-const Order = db.categories;
+const Order = db.orders;
 
 const OrderController = {}; //Create the object controller
 
@@ -11,6 +11,7 @@ const OrderController = {}; //Create the object controller
 
 OrderController.create = (req, res) => {
   // Validate request
+
   if (!req.body.movieID) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
@@ -62,25 +63,33 @@ OrderController.findAll = (req, res) => {
 // Delete a Category with the specified id in the request
 
 OrderController.delete = (req, res) => {
-  const movieID = req.params.movieID;
 
-  Category.findByIdAndRemove(movieID, { useFindAndModify: false })
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot delete order with id= ${movieID}. Maybe the order was not found!`
+  if (req.user.user.superUser == true) {
+    const movieID = req.params.movieID;
+
+    Category.findByIdAndRemove(movieID, { useFindAndModify: false })
+      .then(data => {
+        if (!data) {
+          res.status(404).send({
+            message: `Cannot delete order with id= ${movieID}. Maybe the order was not found!`
+          });
+        } else {
+          res.send({
+            message: "Order was deleted successfully!"
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete order with id= " + movieID
         });
-      } else {
-        res.send({
-          message: "Order was deleted successfully!"
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete order with id= " + movieID
       });
+  }
+  else {
+    res.send({
+      message: "You don't have permissions to create a new movie entry."
     });
+  }
 };
 
 

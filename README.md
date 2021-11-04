@@ -1,82 +1,126 @@
 
 Notflix, the movie database. Search and lease.
 
+Ejercicio para el curso Full Stack Developer de GeeksHubs donde se practíca la creación de un backend funcional de una tienda de alquiler de películas que maneje registro de usuarios y pedidos, y contenga una base de datos de las películas.
 
-///////////////////////////////////////////////////////////////////////////
-
-Users managing routes:
-
-POST commands:
-Login as an existing user:  http://localhost:3000/user/login
-Create a new user:  http://localhost:3000/user/register
-
-GET commands:
-Show user information:  http://localhost:3000/user/:id
-Show all users: http://localhost:3000/user/
-
-PUT commands:
-Update user information: http://localhost:3000/user/:id
-
-DELETE commands:
-Delete an user: http://localhost:3000/user/:id *Requires Admin privileges*
-WARNING! Delete all users: http://localhost:3000/user/ *Requires Admin privileges*
+La base de datos utilizada para este proyecto es MongoDB.
 
 
-///////////////////////////////////////////////////////////////////////////
+## Pre-requisitos del proyecto para hacerlo funcionar en tu equipo local:
 
-Order managing routes:
+* Instalar **Nodejs** en nuestro equipo, descargándolo de su página oficial
+https://nodejs.org/
 
-POST commands:
-Create a new order: http://localhost:3000/order/
+* Clonar el proyecto en nuestro equipo con la consola:
+```
+$git clone 'url-del-repositorio'
+```
 
-GET commands:
-Show all orders: http://localhost:3000/order/
+* Instalar todas las dependecias con el siguiente comando:
+```
+npm install
+```
 
-DELETE commands:
-Delete all orders: http://localhost:3000/order/:id/
-
-
-///////////////////////////////////////////////////////////////////////////
-
-Movie managing routes:
-
-
-GET commands:
-Show all movies: http://localhost:3000/movie/
-Find movie by ID: http://localhost:3000/movie/:id
-Find movie by title: http://localhost:3000/movie/title/:title
-Find movie by genre: http://localhost:3000/movie/genre/:genre
-Find movie by cast: http://localhost:3000/movie/cast/:cast
-Find movie by location: http://localhost:3000/movie/location/:location
-Find movie by availability: http://localhost:3000/movie/available/:available
-
-POST commands:
-Create a new movie: http://localhost:3000/movie/
-
-UPDATE commands:
-Update an existing movie: http://localhost:3000/movie/:id
-
-DELETE commands:
-Delete a specific movie: http://localhost:3000/movie/:id
-
-///////////////////////////////////////////////////////////////////////////
+* Arrancamos el servidor con el siguiente comando:
+```
+npm run start
+```
 
 
-Templates:
+## Tecnologías utilizadas en el proyecto:
 
-Register user:
+* **express**: Instalamos express en nuestro proyecto:
+```
+npm install express
+```
+* **nodemon**: Instalamos nodemon en nuestro proyecto. También añadimos en nuestro **package.json** un script para poder ejecutarlo:
+```
+npm install nodemon
+```
+```
+//AÑADIDO EN PACKAGE.JSON
+"dev": "nodemon index.js"
+```
+```
+//EJECUTAMOS EN TERMINAL
+npm run dev
+```
+* **colors**: Instalamos colors en nuestro proyecto, para poder dar formato a los mensajes que aparezcan en consola.
+```
+npm install colors
+```
+* **morgan**: Instalamos morgan en nuestro proyecto, para poder mostrar mensajes por terminal al realizar peticiones al servidor.
+```
+npm install morgan
+```
+* **winston**: Instalamos winston en nuestro proyecto, creando la posibilidad de generar logs y guardarlos.
+```
+npm install wiston
+```
+* **cors**: Instalamos cors en nuestro proyecto, para tener un control de acceso a nuestra API:
+```
+npm install cors
+```
+* **jsonwebtoken**: Instalamos jsonwebtoken en nuestro proyecto para gestionar uso de tokens:
+```
+npm install jsonwebtoken
+```
+* **bcrypt**: Instalamos bcrypt en nuestro proyecto para encriptar contraseñas:
+```
+npm install bcrypt
+```
 
-{
-"name": "Gonzalo Perez",
-"email":"gonzalo@gmail.com",
-"password":"pass",
-"superUser": false
-}
+```
+La base de datos esta desplegada en Heroku y Atlas.
+```
+Para acceder a ella se puede usar el siguiente link:
 
 
-Log In:
+##  https://notflix-database.herokuapp.com/
 
-{
-"email":"gonzalo@gmail.com",
-"password":"pass"
-}
+
+Con la ayuda de postman, podemos hacer cambios en nuestra base de datos.
+
+Los comnados permitidos son:
+
+**Para peliculas**:
+```
+Mostrar todas las películas. GET(.../movie/)
+```
+Buscar películas por ID. GET(.../movie/"id")
+Buscar películas por título. GET(.../movie/"title")
+Buscar películas por genero. GET(.../movie/"genre")
+Buscar películas por reparto. GET(.../movie/"cast")
+Buscar películas por ciudad. GET(.../movie/"location")
+Buscar películas por disponibilidad. GET(.../movie/"available")
+```
+Crear película. POST(.../movie/"id")
+Modificar película. PUT(.../movie/"id")
+```
+Borrar película. DELETE(.../movie/"id")
+Borrar todas las películas. DELETE(.../movie/)
+
+
+**Para usuarios**:
+```
+Mostrar todos los usuarios. GET(.../user/)
+```
+Buscar usuario por ID. GET(.../user/"id")
+```
+Registrar usuario. POST(.../user/register)
+```
+Loguearse como usuario. POST(.../user/login)
+```
+Borrar usuario. DELETE(.../user/"id")
+```
+También se ha añadido la funcion de administrador que solo se le permitirá a el hacer ciertos cambios en la base de datos.
+
+
+**Para pedidos**:
+```
+Mostrar todos los pedidos. GET(.../user/)
+```
+Nuevo pedido. POST(.../order/)
+```
+Borrar pedido. DELETE(.../order/)
+

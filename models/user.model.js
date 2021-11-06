@@ -6,7 +6,7 @@ module.exports = mongoose => {
         type: String,
         required: true
       },
-      surnname: {
+      surname: {
         type: String,
         required: true
       },

@@ -43,7 +43,7 @@ module.exports = mongoose => {
         required: true
       },
       superUser: {
-        type: Number,
+        type: Boolean,
         required: true
       },
     },

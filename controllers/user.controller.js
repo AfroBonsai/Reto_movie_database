@@ -58,6 +58,7 @@ UserController.register = (req, res) => {
     password: password,
     // passwordCheck: req.body.passwordCheck,
     email: req.body.email,
+    city: req.body.city,
     cp: req.body.cp,
     address: req.body.address,
     phone: req.body.phone,

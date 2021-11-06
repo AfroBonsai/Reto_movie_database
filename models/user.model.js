@@ -21,11 +21,11 @@ module.exports = mongoose => {
       password: {
         type: String,
         required: true
-      },
-      password2: {
+      }/*,
+      passwordCheck: {
         type: String,
         required: true
-      },
+      }*/,
       city: {
         type: String,
         required: true

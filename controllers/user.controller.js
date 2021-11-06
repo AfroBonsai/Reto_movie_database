@@ -53,8 +53,14 @@ UserController.register = (req, res) => {
   // Crear un usuario
   User.create({
     name: req.body.name,
-    email: req.body.email,
+    surname: req.body.surname,
+    dni: req.body.dni,
     password: password,
+    passwordCheck: passwordCheck,
+    email: req.body.email,
+    cp: req.body.cp,
+    address: req.body.address,
+    phone: req.body.phone,
     superUser: req.body.superUser,
   }).then(user => {
 

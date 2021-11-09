@@ -48,36 +48,38 @@ UserController.logIn = (req, res) => {
 
 UserController.register = (req, res) => {
 
-  // Password encryption
-  let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+  // Set email for cross check.
   let email = req.body.email;
 
   User.findOne({ email: email }).then(user => {
 
     console.log(email);
-
     if (!user) {
-      // Create the user
-      User.create({
-        name: req.body.name,
-        surname: req.body.surname,
-        dni: req.body.dni,
-        password: password,
-        email: req.body.email,
-        city: req.body.city,
-        cp: req.body.cp,
-        address: req.body.address,
-        phone: req.body.phone,
-        superUser: req.body.superUser,
-      })
-        .then(user => {
-          res.json({
-            user: user,
-          });
-
+      //Check if email is already registered
+      if (req.body.password.length >= 8) {
+        //Check if password is long enough
+        let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+        // Create the user
+        User.create({
+          name: req.body.name,
+          surname: req.body.surname,
+          dni: req.body.dni,
+          password: password,
+          email: req.body.email,
+          city: req.body.city,
+          cp: req.body.cp,
+          address: req.body.address,
+          phone: req.body.phone,
+          superUser: req.body.superUser,
         })
-        .catch(err => { res.status(500).json(err) });
-    } else res.send({ message: "This email is already registered." });
+          .then(user => {
+            res.json({
+              user: user,
+            });
+          })
+          .catch(err => { res.status(500).json(err) });
+      } else res.send({ message: "The password needs to be at least 8 characters long." });
+    } else res.send({ message: "This email is already registered. Please use a different email." });
   }).catch(err => {
     res.status(500).json(err);
   })

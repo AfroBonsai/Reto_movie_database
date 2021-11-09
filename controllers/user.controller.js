@@ -166,7 +166,7 @@ UserController.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: "user was deleted successfully!"
+          message: "User was deleted successfully!"
         });
       }
     })

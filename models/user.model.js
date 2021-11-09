@@ -16,16 +16,13 @@ module.exports = mongoose => {
       },
       email: {
         type: String,
+        unique: true,
         required: true
       },
       password: {
         type: String,
         required: true
-      }/*,
-      passwordCheck: {
-        type: String,
-        required: true
-      }*/,
+      },
       city: {
         type: String,
         required: true

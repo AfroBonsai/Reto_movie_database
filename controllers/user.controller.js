@@ -45,42 +45,43 @@ UserController.logIn = (req, res) => {
 //-------------------------------------------------------------------------------------
 //REGISTER new user in database
 //create user
+
 UserController.register = (req, res) => {
 
-  // Encriptamos la contraseña
+  // Password encryption
   let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+  let email = req.body.email;
 
-  // Crear un usuario
-  User.create({
-    name: req.body.name,
-    surname: req.body.surname,
-    dni: req.body.dni,
-    password: password,
-    // passwordCheck: req.body.passwordCheck,
-    email: req.body.email,
-    city: req.body.city,
-    cp: req.body.cp,
-    address: req.body.address,
-    phone: req.body.phone,
-    superUser: req.body.superUser,
-  }).then(user => {
+  User.findOne({ email: email }).then(user => {
 
-    // Creamos el token
-    let token = jwt.sign({ user: user }, authConfig.secret, {
-      expiresIn: authConfig.expires
-    });
+    console.log(email);
 
-    res.json({
-      user: user,
-      token: token
-    });
+    if (!user) {
+      // Create the user
+      User.create({
+        name: req.body.name,
+        surname: req.body.surname,
+        dni: req.body.dni,
+        password: password,
+        email: req.body.email,
+        city: req.body.city,
+        cp: req.body.cp,
+        address: req.body.address,
+        phone: req.body.phone,
+        superUser: req.body.superUser,
+      })
+        .then(user => {
+          res.json({
+            user: user,
+          });
 
+        })
+        .catch(err => { res.status(500).json(err) });
+    } else res.send({ message: "This email is already registered." });
   }).catch(err => {
     res.status(500).json(err);
-  });
-
+  })
 };
-
 
 
 // FIND

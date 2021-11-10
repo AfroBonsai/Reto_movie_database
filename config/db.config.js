@@ -1,33 +1,40 @@
 
 //LOCAL SETTINGS
-const LOCALUSER = "root5"; // Fedora user
-const LOCALPASS = "pass"; // Fedora pass
+const LOCAL_USER = "root5"; // Fedora user
+const LOCAL_PASS = "pass"; // Fedora pass
 const IP = "172.16.10.48"; // Local IP Fedora
+// const IP = "172.16.10.48"; // Local IP Fedora
 const PORT = "27017"; // Mongo Compass Port
-const LOCALDB = "movies_db"; //Mongo Compass database
+const LOCAL_DB = "movies_db"; //Mongo Compass database
 
 //REMOTE SETTINGS (MONGO ATLAS)
-const ATLASUSER = "George"; // Atlas username
-const ATLASPASS = "G60183Trex**"; // Atlas password
-const ATLASDB = "myFirstDatabase"; //Nombre base de datos Atlas
+const ATLAS_USER = "George"; // Atlas username
+const ATLAS_PASS = "G60183Trex**"; // Atlas password
+const ATLAS_DB = "myFirstDatabase"; //Nombre base de datos Atlas
 
 module.exports = {
 
   // URL Local host
-  url: `mongodb://${LOCALUSER}:${LOCALPASS}@${IP}:${PORT}/${LOCALDB}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false`,
+  url: `mongodb://${LOCAL_USER}:${LOCAL_PASS}@${IP}:${PORT}/${LOCAL_DB}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false`,
 
-  // URL Heroku + Atlas
-  url: `mongodb+srv://${ATLASUSER}:${ATLASPASS}@notflix.f5w6h.mongodb.net/${ATLASDB}?retryWrites=true&w=majority`
+  // URL Deployed (Heroku + Atlas)
+  // url: `mongodb+srv://${ATLAS_USER}:${ATLAS_PASS}@notflix.f5w6h.mongodb.net/${ATLAS_DB}?retryWrites=true&w=majority`,
 
+  // Export IP to index.js to display it on console
+  IP
 };
+
+// export default {IP}; //experimento ES6
 
 /*
 
 otras ips:
 
-ip clase: 172.16.11.65
-ip clase: 172.16.10.48
+ip clase:
+  172.16.11.65
+  172.16.10.48
 
-ip casa: 192.168.1.55
+ip casa:
+  192.168.1.55
 
 */

@@ -2,7 +2,7 @@
 //LOCAL SETTINGS
 const LOCAL_USER = "root5"; // Fedora user
 const LOCAL_PASS = "pass"; // Fedora pass
-const IP = "172.16.10.48"; // Local IP Fedora
+const IP = "192.168.1.55"; // Local IP Fedora
 // const IP = "172.16.10.48"; // Local IP Fedora
 const PORT = "27017"; // Mongo Compass Port
 const LOCAL_DB = "movies_db"; //Mongo Compass database

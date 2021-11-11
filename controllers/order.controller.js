@@ -1,5 +1,7 @@
 const db = require("../models");
 const Order = db.orders;
+// const Movie = db.movies;
+// const User = db.movie;
 
 const OrderController = {}; //Create the object controller
 
@@ -25,6 +27,25 @@ OrderController.create = (req, res) => {
     returnDate: req.body.returnDate,
     price: req.body.price
   });
+
+/*
+///////////////////////////   PRUEBA 
+  
+
+if (req.user.user._id == true) {
+    Order.aggregate([
+    
+      {
+        $lookup:{
+    from: db.users,
+    localField: 
+        }
+      },
+    ])
+
+
+////////////////////////////
+*/
 
   // Save order in the database
   order
@@ -135,5 +156,6 @@ OrderController.deleteAll = (req, res) => {
 //       });
 //     });
 // };
+
 
 module.exports = OrderController;

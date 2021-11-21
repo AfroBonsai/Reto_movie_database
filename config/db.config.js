@@ -15,10 +15,10 @@ const ATLAS_DB = "myFirstDatabase"; //Nombre base de datos Atlas
 module.exports = {
 
   // URL Local host
-  url: `mongodb://${LOCAL_USER}:${LOCAL_PASS}@${IP}:${PORT}/${LOCAL_DB}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false`,
+  // url: `mongodb://${LOCAL_USER}:${LOCAL_PASS}@${IP}:${PORT}/${LOCAL_DB}?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false`,
 
   // URL Deployed (Heroku + Atlas)
-  // url: `mongodb+srv://${ATLAS_USER}:${ATLAS_PASS}@notflix.f5w6h.mongodb.net/${ATLAS_DB}?retryWrites=true&w=majority`,
+  url: `mongodb+srv://${ATLAS_USER}:${ATLAS_PASS}@notflix.f5w6h.mongodb.net/${ATLAS_DB}?retryWrites=true&w=majority`,
 
   // Export IP to index.js to display it on console
   IP

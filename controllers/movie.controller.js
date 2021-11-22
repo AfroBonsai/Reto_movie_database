@@ -159,6 +159,7 @@ MovieController.create = (req, res) => {
       genre: req.body.genre,
       cast: req.body.cast,
       location: req.body.location,
+      poster_path: req.body.poster_path,
       available: req.body.available ? req.body.available : false
     });
 
@@ -286,3 +287,4 @@ MovieController.deleteAll = (req, res) => {
 
 
 module.exports = MovieController;
+

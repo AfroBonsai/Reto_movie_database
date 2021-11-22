@@ -19,6 +19,10 @@ module.exports = mongoose => {
           type: String,
           required: true
         },
+        poster_path: {
+          type: String,
+          required: true
+        },
         available: {
           type: Boolean,
           required: true
